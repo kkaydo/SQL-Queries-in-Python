@@ -1,0 +1,24 @@
+import pandas as pd
+from sqlalchemy import create_engine
+
+PATH = 'E:/python/datasets/'
+DB_FILE = 'ramenReviews.db'
+
+engine = create_engine('sqlite:///' + PATH + DB_FILE, echo=False)
+connection = engine.connect()
+
+
+# Placed query in this function to enable code re-usuability.
+def showQueryResult(sql, dbconnection):
+    print("\n*** Showing SQL statement")
+    print(sql)
+    # Perform query
+    subDf = pd.read_sql(sql, dbconnection)
+    print("\n*** Showing dataframe summary")
+    return subDf
+
+
+sql = "SELECT * FROM Review"
+
+newDf = showQueryResult(sql, connection)
+print(newDf)
